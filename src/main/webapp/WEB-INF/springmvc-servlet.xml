@@ -11,16 +11,27 @@
 		http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<context:component-scan base-package="org.ygy.spring" />
+	<context:annotation-config />
+	
+	<context:component-scan base-package="org.ygy.spring.controller" />
 
 	<mvc:annotation-driven enable-matrix-variables="true" />
 
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/jsp/" />
-		<property name="suffix" value=".jsp" />
+	<bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="mediaTypes">
+			<map>
+				<!-- 告诉视图解析器，返回的类型为json格式 -->
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<!-- ModelAndView里的数据变成JSON -->
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+			</list>
+		</property>
 	</bean>
 
 </beans>

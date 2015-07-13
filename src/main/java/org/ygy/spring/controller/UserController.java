@@ -1,5 +1,11 @@
 package org.ygy.spring.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +33,20 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping("queryJson")
-	public String queryJson() {
-		return "";
+	public ModelAndView queryJson() {
+		
+		Map<String , Object> data = new HashMap<String, Object>();
+		data.put("msg" , "ok");
+		data.put("date", new Date());
+		
+		List<String> strs = new ArrayList<String>();
+		strs.add("aa");
+		strs.add("bb");
+		data.put("strs", strs);
+		
+		ModelAndView result = new ModelAndView();
+		result.addAllObjects(data);
+		
+		return result;
 	}
 }
